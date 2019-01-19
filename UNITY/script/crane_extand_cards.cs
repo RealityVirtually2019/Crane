@@ -21,7 +21,7 @@ public class crane_extand_cards: MonoBehaviour
 
 	[Space(10)]
 	[Header("Set Draw Mode")]
-	public bool cube_mode = false;
+	public bool cube_mode = true;
 	public enum draw_Selections // custom enumeration for different draw
 	{
 		flat_draw,
@@ -53,6 +53,10 @@ public class crane_extand_cards: MonoBehaviour
 
 	int mode_index = 0;
 
+
+
+	public float back_dis=0;
+	public float front_dis = -1;
 	Vector3 handle_maxpos, handle_min;
 
     
@@ -60,8 +64,6 @@ public class crane_extand_cards: MonoBehaviour
 	void Start()
 	{
 
-
-      
 		if (draw_mode==draw_Selections.flat_draw){
 			flat_setup();
 		}
@@ -82,13 +84,13 @@ public class crane_extand_cards: MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if(handle.transform.position.z>0){
+		if(handle.transform.position.z> back_dis){
 			anim_time = anim_time * (1 - lerp_perct) + 0 * lerp_perct;
            
-		}else if (handle.transform.position.z < -(max_length + 10)){         
+		}else if (handle.transform.position.z <front_dis){         
 			anim_time = anim_time * (1 - lerp_perct) + 1 * lerp_perct;
 		}else{         
-			float handle_tran = Math_maplimit(transform.position.z-handle.transform.position.z, 0, 0.5f, 0, 1);
+			float handle_tran = Math_maplimit(transform.position.z-handle.transform.position.z, front_dis, back_dis, 0, 1);
 			anim_time = anim_time * (1 - lerp_perct) + handle_tran * lerp_perct;
 
 		}
