@@ -6,7 +6,7 @@ using UnityEngine;
 public class crane_extand_cards: MonoBehaviour
 {
 	//public List <GameObject> FoldBoards;
-	//public GameObject Parent_Box;
+	public GameObject handle;
 
 	[Header("Set Board Info")]
 	public GameObject[] FoldBoards;
@@ -37,6 +37,7 @@ public class crane_extand_cards: MonoBehaviour
     [Header("Draw it!")]
 	[Range(0.0f, 1.0f)]
 	public float anim_time = 0;
+	public float lerp_perct = 0.1f;
 
 	[Space(10)]
     [Header("Rotate it")]
@@ -47,9 +48,10 @@ public class crane_extand_cards: MonoBehaviour
 	[Range(0.0f, 180.0f)]
 	public float all_rotate_z = 0;
 
-    
+	float max_length =1;
 
 	int mode_index = 0;
+
     
 	// Use this for initialization
 	void Start()
@@ -70,6 +72,21 @@ public class crane_extand_cards: MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if(handle.transform.position.z>0){
+			anim_time = anim_time * (1 - lerp_perct) + 0 * lerp_perct;
+
+		}else if (handle.transform.position.z < -(max_length + 10)){
+
+
+			anim_time = anim_time * (1 - lerp_perct) + 1 * lerp_perct;
+		}else{
+
+			anim_time = anim_time * (1 - lerp_perct) + (handle.transform.position.z / -(max_length + 10) * lerp_perct);
+
+		}
+
+
+
 		if(anim_time > 0){
         if (draw_mode == draw_Selections.flat_draw)
             {
@@ -85,6 +102,36 @@ public class crane_extand_cards: MonoBehaviour
 			}
 		transform.rotation = Quaternion.Euler(-all_rotate_x, all_rotate_y, all_rotate_z);
 	}
+
+	void album_setup(){
+
+
+		board_count = 0;
+        foreach (GameObject child in FoldBoards)
+        {
+
+            if (cube_mode)
+            {
+                child.transform.localScale = new Vector3(common_border, long_B, 0.01f);
+
+            }
+            //else if (cube_mode)
+            //{
+            child.transform.localPosition = new Vector3(0, 0, board_count * 0.001f);
+            child.transform.localRotation = Quaternion.Euler(0, 90, 0);
+            //    child.transform.localScale = new Vector3(common_border, short_B, 0.01f);
+            //}
+            board_count++;
+        }
+        start_pos = FoldBoards[0].transform.localPosition;
+
+
+
+	}
+
+
+
+
 	void pop_setup(){
 
 		board_count = 0;
@@ -104,6 +151,7 @@ public class crane_extand_cards: MonoBehaviour
             board_count++;
         }
         start_pos = FoldBoards[0].transform.localPosition;
+		//max_length = board_count * long_B;
     }   
 
 	void pop(){
@@ -151,38 +199,59 @@ public class crane_extand_cards: MonoBehaviour
             FoldBoards[i].transform.localPosition = new Vector3(0, (long_B - short_B) / 2 * m, m * 0.001f);
         }
         start_pos = FoldBoards[0].transform.localPosition;
+
+		max_length = Mathf.Floor(board_count / 2) * short_B + Mathf.CeilToInt(board_count / 2) * long_B;
 	}
 
 
 	void flat(){
 
         Vector3 cenpos;
+	
         for (int i = 0; i < board_count; i++)
         {
             Quaternion rotation;
             float ang = Mathf.PI * 0.5f * anim_time;
             if (i % 2 == 0)
             {
-                rotation = Quaternion.Euler(90 * anim_time, 0, 0);
+
+
+				rotation = Quaternion.Euler(90 * anim_time, 0, 0);
+
+
+
+          
+                
+                //rotation = Quaternion.Euler(90 * anim_time, 0, 0);
                 //Quaternion target = Quaternion.Euler(tiltAroundX, 0, 0);
                 if (i > 0)
                 {
                     cenpos = new Vector3(FoldBoards[i].transform.localPosition.x, FoldBoards[i - 1].transform.localPosition.y - Mathf.Cos(ang) * (long_B - short_B) * 0.5f, FoldBoards[i - 1].transform.localPosition.z - Mathf.Sin(ang) * (long_B + short_B) * 0.5f);
-                    FoldBoards[i].transform.localPosition = cenpos;
+                   
+
+
+
+					FoldBoards[i].transform.localPosition = cenpos;
                 }
             }
             else
             {
-                rotation = Quaternion.Euler(180 - 90 * anim_time, 0, 0);
+
+
+				rotation = Quaternion.Euler(180 - 90 * anim_time, 0, 0);
+
+
+ 
                 if (i > 0)
                 {
                     cenpos = new Vector3(FoldBoards[i].transform.localPosition.x, FoldBoards[i - 1].transform.localPosition.y + Mathf.Cos(ang) * (short_B - long_B) * 0.5f, FoldBoards[i - 1].transform.localPosition.z - Mathf.Sin(ang) * (short_B + long_B) * 0.5f);
-                    FoldBoards[i].transform.localPosition = cenpos;
+					FoldBoards[i].transform.localPosition = cenpos;
 
                 }
             }
 
-            FoldBoards[i].transform.localRotation = rotation;
+			FoldBoards[i].transform.localRotation = rotation;
+
         }
 	}
 	void right_setup(){
@@ -209,7 +278,7 @@ public class crane_extand_cards: MonoBehaviour
             FoldBoards[i].transform.localPosition = new Vector3((-long_B + short_B) / 2 * m,0, m * 0.001f);
         }
         start_pos = FoldBoards[0].transform.localPosition;
-
+		max_length = Mathf.Floor(board_count / 2) * short_B + Mathf.CeilToInt(board_count / 2) * long_B;
 	}
 
 	void right()
