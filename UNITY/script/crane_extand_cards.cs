@@ -90,7 +90,10 @@ public class crane_extand_cards: MonoBehaviour
 		}else if (handle.transform.position.z <front_dis){         
 			anim_time = anim_time * (1 - lerp_perct) + 1 * lerp_perct;
 		}else{         
-			float handle_tran = Math_maplimit(transform.position.z-handle.transform.position.z, front_dis, back_dis, 0, 1);
+			// float handle_tran = Math_maplimit(transform.position.z-handle.transform.position.z, front_dis, back_dis, 0, 1);
+			float handle_tran = (transform.position.z-handle.transform.position.z)/ (back_dis-front_dis);
+            
+            Debug.Log(handle_tran);
 			anim_time = anim_time * (1 - lerp_perct) + handle_tran * lerp_perct;
 
 		}
