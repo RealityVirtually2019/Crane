@@ -1,7 +1,8 @@
 # Crane
 
 <b>What it is</b>
-<br />Crane is a design language used for 6DoF XR interactions, inspired by traditional origami style.
+
+Crane is a design language used for 6DoF XR interactions, inspired by traditional origami style.
 
 Our XR interface utilizes the space surrounding the user. It’s not necessary to have a lot of space to navigate through XR, especially when we are using our hands as controllers and cannot reach too far away.
 
@@ -11,8 +12,11 @@ Crane uses a set of interfaces and interactions that inherit & simulate origami.
 
 Our goal is to make the experience in XR robust, tangible & intuitive.
 
+
 <b>How we built it</b>
+
 Unity, Leap Motion, Oculus Rift, Cinema4D, After Effects, Sketch
+
 
 <b>Preview</b>
 
@@ -20,7 +24,8 @@ Drawer/Hover Interaction: https://vimeo.com/312329963
 
 
 <b>Team</b>
-<br />Sara Birchard is a UX/Product Designer from NYC, focused on product usability & experience. She helped create the UI using Cinema 4D and Sketch.
+
+Sara Birchard is a UX/Product Designer from NYC, focused on product usability & experience. She helped create the UI using Cinema 4D and Sketch.
 
 Yu Jen Chen is an illustrator/animator from Taiwan. She did modeling and animation in Maya, Cinema 4D, and After Effects.
 
