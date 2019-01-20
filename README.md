@@ -2,6 +2,8 @@
 
 <b>What it is</b>
 
+Download the unitypackage to play with it: https://drive.google.com/file/d/1-ZKthn4hr9IwnBgp0mQC7oortwPVvu66/view?usp=sharing
+
 Crane is a design language used for 6DoF XR interactions, inspired by traditional origami style.
 
 Our XR interface utilizes the space surrounding the user. It’s not necessary to have a lot of space to navigate through XR, especially when we are using our hands as controllers and cannot reach too far away.
